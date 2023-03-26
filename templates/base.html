@@ -1,0 +1,69 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'vendor/img/favicon.png' %}">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="{% static 'vendor/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/gijgo.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/slicknav.css' %}">
+
+    <link rel="stylesheet" href="{% static 'vendor/css/style.css' %}">
+    <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+</head>
+<body>
+    {% include 'parts/_nav.html' %}
+
+    {% block content %}
+
+    {% endblock %}
+
+    {% include 'parts/_footer.html' %}
+
+    <script src="{% static 'vendor/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+    <script src="{% static 'vendor/js/vendor/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static 'vendor/js/popper.min.js' %}"></script>
+    <script src="{% static 'vendor/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'vendor/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'vendor/js/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'vendor/js/ajax-form.js' %}"></script>
+    <script src="{% static 'vendor/js/waypoints.min.js' %}"></script>
+    <script src="{% static 'vendor/js/jquery.counterup.min.js' %}"></script>
+    <script src="{% static 'vendor/js/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'vendor/js/scrollIt.js' %}"></script>
+    <script src="{% static 'vendor/js/jquery.scrollUp.min.js' %}"></script>
+    <script src="{% static 'vendor/js/wow.min.js' %}"></script>
+    <script src="{% static 'vendor/js/nice-select.min.js' %}"></script>
+    <script src="{% static 'vendor/js/jquery.slicknav.min.js' %}"></script>
+    <script src="{% static 'vendor/js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'vendor/js/plugins.js' %}"></script>
+    <script src="{% static 'vendor/js/gijgo.min.js' %}"></script>
+
+
+
+    <!--contact js-->
+    <script src="{% static 'vendor/js/contact.js' %}"></script>
+    <script src="{% static 'vendor/js/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{% static 'vendor/js/jquery.form.js' %}"></script>
+    <script src="{% static 'vendor/js/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'vendor/js/mail-script.js' %}"></script>
+
+
+    <script src="{% static 'vendor/js/main.js' %}"></script>
+</body>
+
