@@ -30,9 +30,11 @@
 <body>
     {% include 'parts/_nav.html' %}
 
-    {% block content %}
+    <div class="content">
+        {% block content %}
 
-    {% endblock %}
+        {% endblock %}
+    </div>
 
     {% include 'parts/_footer.html' %}
 

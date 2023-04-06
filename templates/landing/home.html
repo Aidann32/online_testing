@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Basty bet{% endblock %}
+{% block title %}Домашняя страница{% endblock %}
 
 
 {% block content %}
@@ -12,11 +12,13 @@
                 <div class="col-lg-7 col-md-6">
                     <div class="slider_text">
                         <!-- <h5 class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".2s">Online testileu</h5> -->
-                        <h3 class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".3s">Online testileu</h3>
-                        <p class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".4s">We provide online instant cash loans with quick approval that suit your term length</p>
+                        <h3 class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".3s">Выбери себе тест</h3>
+                        <p class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".4s">Добро пожаловать на наш сайт онлайн тестирования! Мы предлагаем широкий выбор тестов по различным темам, которые помогут вам оценить свои знания и навыки.</p>
+                        {% if not user.is_authenticated %}
                         <div class="sldier_btn wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".5s">
-                            <a href="#" class="boxed-btn3">Tirkelu</a>
+                            <a href="{% url 'register' %}" class="boxed-btn3">Зарегистрироваться</a>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

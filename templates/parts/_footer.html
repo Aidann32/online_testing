@@ -1,17 +1,41 @@
 {% load static %}
 
-<footer class="footer">
+<footer class="footer mt-5">
     <div class="footer_top">
         <div class="container">
             <div class="row">
                 <div class="col-xl-3 col-md-6 col-lg-3">
                     <div class="footer_widget wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
                         <div class="footer_logo">
-                            <a href="#" class="footer_link">Online testileu</a>
+                            <a href="#" class="footer_link">Онлайн тестирование</a>
                         </div>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-6 col-lg-2">
+                    <div class="footer_widget wow fadeInUp" data-wow-duration="1.1s" data-wow-delay=".4s">
+                        <h3 class="footer_title">Аккаунт</h3>
+                        <ul>
+                            {% if user.is_authenticated %}
+                                <li><a href="{% url 'account' %}">Кабинет</a></li>
+                                <li><a href="{% url 'logout' %}">Выйти</a></li>
+                            {% else %}
+                                <li><a href="{% url 'login' %}">Войти</a></li>
+                                <li><a href="{% url 'register' %}">Зарегистрироваться</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-6 col-lg-2">
+                    <div class="footer_widget wow fadeInUp" data-wow-duration="1.1s" data-wow-delay=".4s">
+                        <h3 class="footer_title">Другое</h3>
+                        <ul>
+                            <li><a href="{% url 'home' %}">Домой</a></li>
+                            <li><a href="#">Все тесты</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
+        
     </div>
 </footer>

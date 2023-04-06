@@ -1,5 +1,6 @@
 {% load static %}
 
+
 <header>
     <div class="header-area ">
         <div id="sticky-header" class="main-header-area">
@@ -8,15 +9,22 @@
                     <div class="row align-items-center">
                         <div class="col-xl-3 col-lg-2">
                             <div class="logo">
-                                <h2><a href="index.html">Online testileu</a></h2>
+                                <h2><a href="{% url 'home' %}" style="color:white;">Онлайн тестирование</a></h2>
                             </div>
                         </div>
                         <div class="col-xl-9 col-lg-10">
                             <div class="main-menu  d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
-                                        <li><a href="index.html">Uige</a></li>
-                                        <li><a href="index.html">Akkauntka kiru</a></li>
+                                        <li><a href="{% url 'home' %}">Домой</a></li>
+                                        <li><a href="{% url 'all_tests' %}">Все тесты</a></li>
+                                        {% if user.is_authenticated %}
+                                        <li><a href="{% url 'account' %}">Тесты</a></li>
+                                        <li><a href="{% url 'logout' %}">Выйти</a></li>
+                                        {% else %}
+                                        <li><a href="{% url 'login' %}">Войти</a></li>
+                                        <li><a href="{% url 'register' %}">Зарегистрироваться</a></li>
+                                        {% endif %}
                                     </ul>
                                 </nav>
                             </div>
@@ -28,6 +36,28 @@
                 </div>
 
             </div>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="container-fluid p-0">
+                        <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="True">&times;</span>
+                            </button>
+                            {{ message }}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %} 
         </div>
     </div>
 </header>
+<div class="bradcam_area bradcam_bg_1">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="bradcam_text">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
