@@ -67,6 +67,16 @@ def test(request, pk):
 	context['test'] = test
 	return render(request, 'account/test_details.html', context)
 
+
+@login_required
+def pass_test(request, pk):
+	if not Test.objects.filter(pk=pk).exists():
+		return Http404()
+	test = Test.objects.get(pk=pk)
+	if request.user in test.users.all():
+		return Http404()
+
+
 def all_tests(request):
 	tests = Test.objects.all()
 	return render(request, 'account/all_tests.html', {'tests': tests})
