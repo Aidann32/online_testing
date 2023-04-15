@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}Результат теста{% endblock %}
+
+{% block content %}
+<div class=" container text-center">
+    <h1>{{ result.test.name }}</h1>
+    <h2>Результат: {{ result.result }} из {{ result.test.questions_number }}</h2>
+    <h3>Описание теста: <br>{{ result.test.description }}</h3>    
+</div>
+<div class="text-center">
+    <div class="progress-table-wrap">
+        <div class="progress-table">
+            <div class="table-head">
+                <div class="serial">№</div>
+                <div class="country">Вопрос</div>
+                <div class="visit">Правильный ответ</div>
+                <div class="percentage">Выбранный ответ</div>
+            </div>
+            {% for option in result.choosed_options.all %}
+                <div class="table-row">
+                    <div class="serial" style="color:black;">{{ forloop.counter }}</div>
+                    <div class="country" style="color:black;">{{ option.question.text }}</div>
+                    {% if option.question.get_right_answer %}
+                    <div class="visit" style="color:black;">{{ option.question.get_right_answer.text}}</div>
+                    {% else %}
+                    <div class="visit"></div>
+                    {% endif %}
+                    <div class="percentage" style="color:black;">{{ option.text }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div class="text-center mt-5 container" style="width:700px; height: 700px;">
+    <canvas id="resultChart"></canvas>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('resultChart');
+    let right_answers = parseInt({{ result.result }});
+    let wrong_answers = parseInt({{ result.test.questions_number }}) - right_answers;
+    const data = {
+    labels: [
+        'Неправильные ответы',
+        'Правильные ответы'
+    ],
+    datasets: [{
+        label: 'Результат',
+        data: [wrong_answers, right_answers],
+        backgroundColor: [
+        'rgb(255, 99, 132)',
+        'rgb(124,252,0)',
+        ],
+        hoverOffset: 4
+    }]
+    };
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: data,
+    });
+</script>
+{% endblock %}

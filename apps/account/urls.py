@@ -11,4 +11,6 @@ urlpatterns = [
 
     path('test/<int:pk>', views.test, name='test'),
     path('test/<int:pk>/pass', views.pass_test, name='pass_test'), 
+    path('test/<int:test_pk>/result', views.test_result, name='test_result'),
+    path('test/history', views.test_history, name='test_history'),
 ]

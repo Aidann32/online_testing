@@ -4,9 +4,10 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
+from django.contrib.auth.models import User
 
 from .forms import NewUserForm
-from .models import Test
+from .models import Test, TestQuestion, TestQuestionOption, TestResult
 
 
 def register(request):
@@ -67,14 +68,51 @@ def test(request, pk):
 	context['test'] = test
 	return render(request, 'account/test_details.html', context)
 
+@login_required
+def test_result(request, test_pk):
+	if not (Test.objects.filter(pk=test_pk).exists() and TestResult.objects.filter(test__pk=test_pk, user=request.user).exists()):
+		raise Http404()
+	test_result = TestResult.objects.filter(test__pk=test_pk, user=request.user).first()
+	return render(request, 'account/test_result.html', {'result': test_result})
+
+
+@login_required
+def test_history(request):
+	test_results = TestResult.objects.filter(user=request.user)
+	return render(request, 'account/test_history.html', {'results': test_results})
+
 
 @login_required
 def pass_test(request, pk):
 	if not Test.objects.filter(pk=pk).exists():
-		return Http404()
+		raise Http404()
+	context = dict()
+
 	test = Test.objects.get(pk=pk)
-	if request.user in test.users.all():
-		return Http404()
+	if not ((request.user in test.users.all()) and (not test.is_expired())):
+		raise Http404()
+	
+	if TestResult.objects.filter(user=request.user, test=test).exists():
+		test_result = TestResult.objects.filter(user=request.user, test=test).first()
+		return redirect('test_result', test_pk=test.pk)
+
+	if request.method == 'POST':
+		answers = dict(request.POST)
+		del answers['csrfmiddlewaretoken']
+		test_result = TestResult.objects.create(user=request.user, test=test)
+		choosed_options = list()
+		for key, value in answers.items():
+			choosed_option = TestQuestionOption.objects.filter(pk=value[0]).first()
+			choosed_options.append(choosed_option)
+			right_answers = TestQuestionOption.objects.filter(question__pk=key, is_answer=True)
+			if choosed_option in right_answers:
+				test_result.choosed_options.add(choosed_option)
+				test_result.result += 1
+		test_result.save()
+		return redirect('test_result', test_pk=test.pk)
+	
+	context['test'] = test
+	return render(request, 'account/pass_test.html', context)
 
 
 def all_tests(request):

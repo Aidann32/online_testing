@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Test{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ test.name }}</h1>
+    <div class="row mt-5">
+        <form method="POST">
+            {% csrf_token %}
+            {% for question in test.testquestion_set.all %}
+            <div class="col-12 mb-5">
+                <h3>{{ forloop.counter }}. {{ question.text }}</h3>
+                {% if question.image %}
+                    <img src="{{ question.image.url }}" class="img-fluid">
+                {% endif %}
+                <div class="row">
+                    {% for option in question.testquestionoption_set.all %}
+                    <div class="col-12">
+                        <input type="radio" id="{{ question.pk}}:{{ option.pk}}" name="{{ question.pk }}" value="{{option.pk}}">
+                        <label for="{{ question.pk}}:{{ option.pk}}">{{ option.text }}</label>
+                        {% if option.image %}
+                            <img src="{{option.image.url}}" class="img-fluid">
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>    
+            {% endfor %}
+            <button class="genric-btn primary e-large" type="submit">Закончить</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

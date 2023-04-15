@@ -36,9 +36,9 @@
                         <h4>Описание отсутствует</h4>
                         {% endif %}
                     </div>
-                    {% if user in test.users.all %}
+                    {% if user in test.users.all and not test.is_expired %}
                     <div class="submit_btn">
-                        <button class="boxed-btn3 w-100" type="submit">Сдать тест</button>
+                        <a class="boxed-btn3 w-100" href="{% url 'pass_test' test.pk %}">Сдать тест</a>
                     </div>
                     {% endif %}
                 </div>

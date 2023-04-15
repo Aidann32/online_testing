@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import date
 
 
 class Test(models.Model):
@@ -18,18 +19,11 @@ class Test(models.Model):
     def __str__(self):
         return self.name
     
-
-class TestResult(models.Model):
-    test = models.ForeignKey(Test, on_delete=models.CASCADE, verbose_name='Тест')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
-    result = models.IntegerField(verbose_name='Результат', default=0)
-
-    class Meta:
-        verbose_name = 'Результат теста'
-        verbose_name_plural = 'Результаты теста'
-
-    def __str__(self):
-        return f'{self.test.name} {self.user.username}'
+    def is_expired(self):
+        today = date.today()
+        if today >= self.expires_at:
+            return True
+        return False
 
 
 class TestQuestion(models.Model):
@@ -44,7 +38,12 @@ class TestQuestion(models.Model):
         verbose_name_plural = 'Вопросы теста'
 
     def __str__(self):
-        return f'{self.test.name} {self.text}'    
+        return f'{self.test.name} {self.text}' 
+
+    def get_right_answer(self):
+        if TestQuestionOption.objects.filter(question=self, is_answer=True).exists():
+            return TestQuestionOption.objects.filter(question=self, is_answer=True).first()  
+        return None 
 
 
 class TestQuestionOption(models.Model):
@@ -61,3 +60,18 @@ class TestQuestionOption(models.Model):
 
     def __str__(self):
         return f'{self.question} {self.text}'
+    
+
+class TestResult(models.Model):
+    test = models.ForeignKey(Test, on_delete=models.CASCADE, verbose_name='Тест')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+    choosed_options = models.ManyToManyField(TestQuestionOption, blank=True, verbose_name='Выбранные варианты')
+    result = models.IntegerField(verbose_name='Результат', default=0)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания', null=True)
+
+    class Meta:
+        verbose_name = 'Результат теста'
+        verbose_name_plural = 'Результаты теста'
+
+    def __str__(self):
+        return f'{self.test.name} {self.user.username}'

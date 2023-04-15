@@ -28,3 +28,4 @@ class TestAdmin(NestedModelAdmin):
 @admin.register(TestResult)
 class TestResultAdmin(admin.ModelAdmin):
     list_display = ('test', 'user', 'result')
+    readonly_fields = ('choosed_options', 'created_at')

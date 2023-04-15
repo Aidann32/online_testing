@@ -20,6 +20,7 @@
                                         <li><a href="{% url 'all_tests' %}">Все тесты</a></li>
                                         {% if user.is_authenticated %}
                                         <li><a href="{% url 'account' %}">Тесты</a></li>
+                                        <li><a href="{% url 'test_history' %}">История</a></li>
                                         <li><a href="{% url 'logout' %}">Выйти</a></li>
                                         {% else %}
                                         <li><a href="{% url 'login' %}">Войти</a></li>
